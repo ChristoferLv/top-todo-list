@@ -1,0 +1,23 @@
+{
+  "name": "top-todo-list",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/ChristoferLv/top-todo-list#readme",
+  "bugs": {
+    "url": "https://github.com/ChristoferLv/top-todo-list/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChristoferLv/top-todo-list.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0"
+  }
+}

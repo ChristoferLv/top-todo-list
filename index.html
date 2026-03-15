@@ -1,13 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
-    <script src="script.js"></script>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="top">
+                <p>Grupos</p>
+                <div id="add-group"></div>
+            </div>
+            <div class="groups-container"></div>
+        </div>
+        <div class="content">
+            <div class="content-header">
+                <p>Tarefas</p>
+                <div class="add-todo"></div>
+                <div class="break"></div>
+                <div class="new-todo-tab">
+                    <label for="title">Título*</label>
+                    <input id="title" type="text">
+                    <label for="description">Descrição</label>
+                    <input id="description" type="text">
+                    <label for="dueDate">Data</label>
+                    <input id="dueDate" type="datetime-local">
+                    <button type="button">Adicionar</button>
+                </div>
+            </div>
+            <div class="content-body"></div>
+        </div>
+    </div>
+
+
+
+    <dialog id="add-group-dialog">
+        <form id="myForm" method="dialog">
+            <label for="groupName">Nome do Grupo</label>
+            <input type="text" id="groupName" name="groupName" placeholder="Nome" required>
+            <button id="confirmBtn" value="default">Confirm</button>
+            <button type="button" id="close-btn" value="cancel">Cancel</button>
+        </form>
+    </dialog>
+
+    <script src="script.js" type="module"></script>
 </body>
+
 </html>

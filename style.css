@@ -84,7 +84,7 @@ body {
     justify-content: space-around;
 }
 
-.expanded{
+.expanded {
     height: 200px;
 }
 
@@ -95,4 +95,17 @@ body {
 dialog {
     margin-top: 20vh;
     padding: 50px;
+}
+
+.is-done {
+    width: 15px;
+    height: 15px;
+    border: 1px solid black;
+    background-color: red;
+    margin-top: 15px;
+}
+
+
+.done {
+    background-color: green;
 }

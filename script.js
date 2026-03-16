@@ -37,7 +37,6 @@ createTodoBtn.addEventListener("click", (e) => {
  */
 function handleDeleteTask(e) {
     e.stopPropagation();
-    console.log(e.target.parentElement.getAttribute("data-id"));
     const taskId = e.target.parentElement.getAttribute("data-id");
     const newList = tasks[currentGroup].filter(task => task.id !== taskId);
     tasks[currentGroup] = newList;
@@ -48,8 +47,19 @@ function handleDeleteTask(e) {
  * 
  * @param {event} e 
  */
+function handleDoneTaks(e) {
+    e.stopPropagation();
+    const taskId = e.target.parentElement.getAttribute("data-id");
+    const newList = tasks[currentGroup].map((task) => {if (task.id == taskId) task.done = !task.done; return task });
+    tasks[currentGroup] = newList;
+    drawTasks();
+}
+
+/**
+ * 
+ * @param {event} e 
+ */
 function handleExpand(e) {
-    console.log(e.currentTarget)
     e.currentTarget.classList.toggle("expanded");
 }
 
@@ -62,31 +72,46 @@ const tasks = {
             id: crypto.randomUUID(),
             title: "Tarefa1",
             description: "Tem que fazer a tarefa 1",
-            dueDate: addDays(new Date(), 1)
+            dueDate: addDays(new Date(), 1),
+            notes: "",
+            done: false,
+            priority: ""
         },
         {
             id: crypto.randomUUID(),
             title: "Tarefa2",
             description: "Tem que fazer a tarefa 2",
-            dueDate: addDays(new Date(), 2)
+            dueDate: addDays(new Date(), 2),
+            notes: "",
+            done: false,
+            priority: ""
         },
         {
             id: crypto.randomUUID(),
             title: "Tarefa3",
             description: "Tem que fazer a tarefa 3",
-            dueDate: addDays(new Date(), 3)
+            dueDate: addDays(new Date(), 3),
+            notes: "",
+            done: false,
+            priority: ""
         },
         {
             id: crypto.randomUUID(),
             title: "Tarefa4",
             description: "Tem que fazer a tarefa 4",
-            dueDate: addDays(new Date(), 4)
+            dueDate: addDays(new Date(), 4),
+            notes: "",
+            done: false,
+            priority: ""
         },
         {
             id: crypto.randomUUID(),
             title: "Tarefa5",
             description: "Tem que fazer a tarefa 5",
-            dueDate: addDays(new Date(), 5)
+            dueDate: addDays(new Date(), 5),
+            notes: "",
+            done: true,
+            priority: ""
         }
     ]
 }
@@ -94,7 +119,6 @@ const tasks = {
 function addGroup(groupname) {
     tasks[groupname] = [];
     drawGroups();
-    console.log(tasks);
 }
 
 /**
@@ -112,7 +136,6 @@ function drawTasks() {
     listName.innerText = "Vizualisando grupo: " + currentGroup;
     if (!(currentGroup in tasks)) return;
     for (const task of tasks[currentGroup]) {
-        console.log(task)
         const newTask = document.createElement("div");
         newTask.classList.add("task");
         newTask.setAttribute("data-id", task['id']);
@@ -121,6 +144,10 @@ function drawTasks() {
         taskTitle.innerText = task.title;
         const taskDescription = document.createElement("p");
         taskDescription.innerText = task.description;
+        const isDone = document.createElement("div");
+        isDone.classList.add("is-done");
+        if (task.done) isDone.classList.add("done");
+        isDone.addEventListener("click", handleDoneTaks)
         const taskDueDate = document.createElement("p");
         taskDueDate.innerText = task.dueDate.toLocaleDateString();
         const taskDeleteBtn = document.createElement("div");
@@ -128,6 +155,7 @@ function drawTasks() {
         taskDeleteBtn.addEventListener("click", handleDeleteTask);
         newTask.append(taskTitle);
         newTask.append(taskDescription);
+        newTask.append(isDone);
         newTask.append(taskDueDate);
         newTask.append(taskDeleteBtn);
         taskList.append(newTask);
@@ -159,7 +187,6 @@ const myForm = document.getElementById('myForm');
 
 
 showFormDialogButton.addEventListener('click', () => {
-    console.log("click")
     myFormDialog.showModal();
 });
 

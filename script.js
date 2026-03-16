@@ -1,5 +1,5 @@
-import { addDays } from "./node_modules/date-fns/index.js";
-// import { addDays } from "https://cdn.jsdelivr.net/npm/date-fns@3/+esm";
+//import { addDays } from "./node_modules/date-fns/index.js";
+import { addDays } from "https://cdn.jsdelivr.net/npm/date-fns@3/+esm";
 
 console.log("script")
 const currentGroup = "tasks";
@@ -50,6 +50,7 @@ const tasks = {
 
 function addGroup(groupname){
     tasks[groupname] = [];
+    drawGroups();
     console.log(tasks);
 }
 
@@ -74,6 +75,21 @@ function drawTasks() {
 }
 
 drawTasks();
+
+const groupsList = document.querySelector(".groups-container");
+function drawGroups() {
+    groupsList.innerText = '';
+     for (const group in tasks) {
+        const newGroup = document.createElement("div");
+        newGroup.classList.add("group");
+        const groupName = document.createElement("p");
+        groupName.innerText = group;
+        newGroup.append(groupName);
+        groupsList.append(newGroup);
+    }
+}
+
+drawGroups();
 
 const myFormDialog = document.getElementById('add-group-dialog');
 const showFormDialogButton = document.getElementById('add-group');

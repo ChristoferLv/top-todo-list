@@ -45,12 +45,14 @@ body {
     background-position: -5px -5px;
 }
 
-.delete-btn {
+.delete-btn,
+.delete-group {
     width: 30px;
     height: 30px;
     background-image: url(./icons/delete.svg);
     background-size: 30px 30px;
     background-repeat: no-repeat;
+    margin: 10px;
 }
 
 .new-todo-tab {
@@ -80,7 +82,10 @@ body {
 .task {
     display: flex;
     justify-content: space-around;
-    align-items: center;
+}
+
+.expanded{
+    height: 200px;
 }
 
 .hidden {

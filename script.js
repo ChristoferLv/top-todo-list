@@ -2,10 +2,26 @@
 import { addDays } from "https://cdn.jsdelivr.net/npm/date-fns@3/+esm";
 
 console.log("script")
-let currentGroup = "tasks";
+let currentGroup = "Tasks";
 const addTodoBtn = document.querySelector(".add-todo");
 const todoTab = document.querySelector(".new-todo-tab");
 const createTodoBtn = document.querySelector(".new-todo-tab > button");
+const listName = document.querySelector(".list-name");
+const deleteGroupBtn = document.querySelector(".delete-group");
+
+deleteGroupBtn.addEventListener("click", (e) => {
+    if (currentGroup in tasks) {
+        delete tasks[currentGroup];
+    }
+    currentGroup = '';
+    if (Object.keys(tasks).length == 0) {
+        tasks["Tasks"] = [];
+        currentGroup = 'Tasks';
+
+    }
+    drawGroups();
+    drawTasks();
+})
 
 createTodoBtn.addEventListener("click", (e) => {
     const title = document.querySelector("#title");
@@ -20,6 +36,7 @@ createTodoBtn.addEventListener("click", (e) => {
  * @param {event} e 
  */
 function handleDeleteTask(e) {
+    e.stopPropagation();
     console.log(e.target.parentElement.getAttribute("data-id"));
     const taskId = e.target.parentElement.getAttribute("data-id");
     const newList = tasks[currentGroup].filter(task => task.id !== taskId);
@@ -27,11 +44,20 @@ function handleDeleteTask(e) {
     drawTasks();
 }
 
+/**
+ * 
+ * @param {event} e 
+ */
+function handleExpand(e) {
+    console.log(e.currentTarget)
+    e.currentTarget.classList.toggle("expanded");
+}
+
 addTodoBtn.addEventListener("click", () => {
     todoTab.classList.toggle("hidden");
 })
 const tasks = {
-    "tasks": [
+    "Tasks": [
         {
             id: crypto.randomUUID(),
             title: "Tarefa1",
@@ -83,11 +109,14 @@ function handleGroupClick(e) {
 const taskList = document.querySelector(".content-body");
 function drawTasks() {
     taskList.innerText = '';
+    listName.innerText = "Vizualisando grupo: " + currentGroup;
+    if (!(currentGroup in tasks)) return;
     for (const task of tasks[currentGroup]) {
         console.log(task)
         const newTask = document.createElement("div");
         newTask.classList.add("task");
         newTask.setAttribute("data-id", task['id']);
+        newTask.addEventListener("click", handleExpand);
         const taskTitle = document.createElement("p");
         taskTitle.innerText = task.title;
         const taskDescription = document.createElement("p");
@@ -96,7 +125,7 @@ function drawTasks() {
         taskDueDate.innerText = task.dueDate.toLocaleDateString();
         const taskDeleteBtn = document.createElement("div");
         taskDeleteBtn.classList.add("delete-btn");
-        taskDeleteBtn.addEventListener("click",handleDeleteTask);
+        taskDeleteBtn.addEventListener("click", handleDeleteTask);
         newTask.append(taskTitle);
         newTask.append(taskDescription);
         newTask.append(taskDueDate);

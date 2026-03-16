@@ -11,10 +11,21 @@ createTodoBtn.addEventListener("click", (e) => {
     const title = document.querySelector("#title");
     const description = document.querySelector("#description");
     const dueDate = document.querySelector("#dueDate");
-    console.log(tasks);
-    tasks[currentGroup].push({ title: title.value, description: description.value, dueDate: new Date(dueDate.value) })
+    tasks[currentGroup].push({ id: crypto.randomUUID(), title: title.value, description: description.value, dueDate: new Date(dueDate.value) })
     drawTasks();
 })
+
+/**
+ * 
+ * @param {event} e 
+ */
+function handleDeleteTask(e) {
+    console.log(e.target.parentElement.getAttribute("data-id"));
+    const taskId = e.target.parentElement.getAttribute("data-id");
+    const newList = tasks[currentGroup].filter(task => task.id !== taskId);
+    tasks[currentGroup] = newList;
+    drawTasks();
+}
 
 addTodoBtn.addEventListener("click", () => {
     todoTab.classList.toggle("hidden");
@@ -22,25 +33,31 @@ addTodoBtn.addEventListener("click", () => {
 const tasks = {
     "tasks": [
         {
+            id: crypto.randomUUID(),
             title: "Tarefa1",
             description: "Tem que fazer a tarefa 1",
             dueDate: addDays(new Date(), 1)
         },
         {
+            id: crypto.randomUUID(),
             title: "Tarefa2",
             description: "Tem que fazer a tarefa 2",
             dueDate: addDays(new Date(), 2)
         },
         {
+            id: crypto.randomUUID(),
             title: "Tarefa3",
             description: "Tem que fazer a tarefa 3",
             dueDate: addDays(new Date(), 3)
         },
         {
+            id: crypto.randomUUID(),
             title: "Tarefa4",
             description: "Tem que fazer a tarefa 4",
             dueDate: addDays(new Date(), 4)
-        }, {
+        },
+        {
+            id: crypto.randomUUID(),
             title: "Tarefa5",
             description: "Tem que fazer a tarefa 5",
             dueDate: addDays(new Date(), 5)
@@ -48,7 +65,7 @@ const tasks = {
     ]
 }
 
-function addGroup(groupname){
+function addGroup(groupname) {
     tasks[groupname] = [];
     drawGroups();
     console.log(tasks);
@@ -58,7 +75,7 @@ function addGroup(groupname){
  * 
  * @param {event} e 
  */
-function handleGroupClick(e){
+function handleGroupClick(e) {
     currentGroup = e.target.innerText;
     drawTasks();
 }
@@ -70,15 +87,20 @@ function drawTasks() {
         console.log(task)
         const newTask = document.createElement("div");
         newTask.classList.add("task");
+        newTask.setAttribute("data-id", task['id']);
         const taskTitle = document.createElement("p");
         taskTitle.innerText = task.title;
         const taskDescription = document.createElement("p");
         taskDescription.innerText = task.description;
         const taskDueDate = document.createElement("p");
         taskDueDate.innerText = task.dueDate.toLocaleDateString();
+        const taskDeleteBtn = document.createElement("div");
+        taskDeleteBtn.classList.add("delete-btn");
+        taskDeleteBtn.addEventListener("click",handleDeleteTask);
         newTask.append(taskTitle);
         newTask.append(taskDescription);
         newTask.append(taskDueDate);
+        newTask.append(taskDeleteBtn);
         taskList.append(newTask);
     }
 }
@@ -88,7 +110,7 @@ drawTasks();
 const groupsList = document.querySelector(".groups-container");
 function drawGroups() {
     groupsList.innerText = '';
-     for (const group in tasks) {
+    for (const group in tasks) {
         const newGroup = document.createElement("div");
         newGroup.classList.add("group");
         newGroup.addEventListener("click", handleGroupClick);

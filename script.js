@@ -2,7 +2,7 @@
 import { addDays } from "https://cdn.jsdelivr.net/npm/date-fns@3/+esm";
 
 console.log("script")
-const currentGroup = "tasks";
+let currentGroup = "tasks";
 const addTodoBtn = document.querySelector(".add-todo");
 const todoTab = document.querySelector(".new-todo-tab");
 const createTodoBtn = document.querySelector(".new-todo-tab > button");
@@ -12,7 +12,7 @@ createTodoBtn.addEventListener("click", (e) => {
     const description = document.querySelector("#description");
     const dueDate = document.querySelector("#dueDate");
     console.log(tasks);
-    tasks.push({ title: title.value, description: description.value, dueDate: new Date(dueDate.value) })
+    tasks[currentGroup].push({ title: title.value, description: description.value, dueDate: new Date(dueDate.value) })
     drawTasks();
 })
 
@@ -54,6 +54,15 @@ function addGroup(groupname){
     console.log(tasks);
 }
 
+/**
+ * 
+ * @param {event} e 
+ */
+function handleGroupClick(e){
+    currentGroup = e.target.innerText;
+    drawTasks();
+}
+
 const taskList = document.querySelector(".content-body");
 function drawTasks() {
     taskList.innerText = '';
@@ -82,6 +91,7 @@ function drawGroups() {
      for (const group in tasks) {
         const newGroup = document.createElement("div");
         newGroup.classList.add("group");
+        newGroup.addEventListener("click", handleGroupClick);
         const groupName = document.createElement("p");
         groupName.innerText = group;
         newGroup.append(groupName);

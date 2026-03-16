@@ -21,11 +21,24 @@ body{
     padding: 0 20px;
 }
 
+.group{
+    padding: 0 20px;
+}
+
+.group:active {
+  background-color: darkgreen; /* Darken the background color */
+  transform: translateY(2px) scale(1.01); /* Move down slightly and scale down */
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.24); /* Reduce shadow to simulate pressing in */
+}
+
 .add-todo,
 #add-group{
     width: 20px;
     height: 20px;
     border: black 1px solid;
+    background-image: url(./icons/plus.svg);
+    background-size: 30px;
+    background-position: -5px -5px ;
 }
 
 .new-todo-tab{

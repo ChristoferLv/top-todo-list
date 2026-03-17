@@ -27,7 +27,9 @@ createTodoBtn.addEventListener("click", (e) => {
     const title = document.querySelector("#title");
     const description = document.querySelector("#description");
     const dueDate = document.querySelector("#dueDate");
-    tasks[currentGroup].push({ id: crypto.randomUUID(), title: title.value, description: description.value, dueDate: new Date(dueDate.value) })
+    const priority = document.querySelector("#priority");
+    tasks[currentGroup].push({ id: crypto.randomUUID(), title: title.value, description: description.value, dueDate: new Date(dueDate.value), priority:priority.value })
+    
     drawTasks();
 })
 
@@ -50,7 +52,7 @@ function handleDeleteTask(e) {
 function handleDoneTaks(e) {
     e.stopPropagation();
     const taskId = e.target.parentElement.getAttribute("data-id");
-    const newList = tasks[currentGroup].map((task) => {if (task.id == taskId) task.done = !task.done; return task });
+    const newList = tasks[currentGroup].map((task) => { if (task.id == taskId) task.done = !task.done; return task });
     tasks[currentGroup] = newList;
     drawTasks();
 }
@@ -73,45 +75,40 @@ const tasks = {
             title: "Tarefa1",
             description: "Tem que fazer a tarefa 1",
             dueDate: addDays(new Date(), 1),
-            notes: "",
             done: false,
-            priority: ""
+            priority: 1
         },
         {
             id: crypto.randomUUID(),
             title: "Tarefa2",
             description: "Tem que fazer a tarefa 2",
             dueDate: addDays(new Date(), 2),
-            notes: "",
             done: false,
-            priority: ""
+            priority: 2
         },
         {
             id: crypto.randomUUID(),
             title: "Tarefa3",
             description: "Tem que fazer a tarefa 3",
             dueDate: addDays(new Date(), 3),
-            notes: "",
             done: false,
-            priority: ""
+            priority: 3
         },
         {
             id: crypto.randomUUID(),
             title: "Tarefa4",
             description: "Tem que fazer a tarefa 4",
             dueDate: addDays(new Date(), 4),
-            notes: "",
             done: false,
-            priority: ""
+            priority: 2
         },
         {
             id: crypto.randomUUID(),
             title: "Tarefa5",
             description: "Tem que fazer a tarefa 5",
             dueDate: addDays(new Date(), 5),
-            notes: "",
             done: true,
-            priority: ""
+            priority: 3
         }
     ]
 }
@@ -150,6 +147,9 @@ function drawTasks() {
         isDone.addEventListener("click", handleDoneTaks)
         const taskDueDate = document.createElement("p");
         taskDueDate.innerText = task.dueDate.toLocaleDateString();
+        const taskPriority = document.createElement("p");
+        taskPriority.innerText = task.priority;
+        newTask.classList.add("priority-" + task.priority);
         const taskDeleteBtn = document.createElement("div");
         taskDeleteBtn.classList.add("delete-btn");
         taskDeleteBtn.addEventListener("click", handleDeleteTask);

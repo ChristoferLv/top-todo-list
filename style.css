@@ -109,3 +109,11 @@ dialog {
 .done {
     background-color: green;
 }
+
+.priority-2 {
+    background-color: khaki;
+}
+
+.priority-3 {
+    background-color: firebrick;
+}

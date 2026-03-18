@@ -1,5 +1,5 @@
 //import { addDays } from "./node_modules/date-fns/index.js";
-import { addDays } from "https://cdn.jsdelivr.net/npm/date-fns@3/+esm";
+import { addDays, format } from "https://cdn.jsdelivr.net/npm/date-fns@3/+esm";
 
 console.log("script")
 let currentGroup = "Tasks";
@@ -28,8 +28,8 @@ createTodoBtn.addEventListener("click", (e) => {
     const description = document.querySelector("#description");
     const dueDate = document.querySelector("#dueDate");
     const priority = document.querySelector("#priority");
-    tasks[currentGroup].push({ id: crypto.randomUUID(), title: title.value, description: description.value, dueDate: new Date(dueDate.value), priority:priority.value })
-    
+    tasks[currentGroup].push({ id: crypto.randomUUID(), title: title.value, description: description.value, dueDate: new Date(dueDate.value), priority: priority.value })
+
     drawTasks();
 })
 
@@ -133,6 +133,7 @@ function drawTasks() {
     listName.innerText = "Vizualisando grupo: " + currentGroup;
     if (!(currentGroup in tasks)) return;
     for (const task of tasks[currentGroup]) {
+        console.log(task["dueDate"].toISOString())
         const newTask = document.createElement("div");
         newTask.classList.add("task");
         newTask.setAttribute("data-id", task['id']);
@@ -150,6 +151,9 @@ function drawTasks() {
         const taskPriority = document.createElement("p");
         taskPriority.innerText = task.priority;
         newTask.classList.add("priority-" + task.priority);
+        const taskEditBtn = document.createElement("div");
+        taskEditBtn.classList.add("edit-btn");
+        taskEditBtn.addEventListener("click", (e) => { handleEditButton(e, e.target.parentElement.getAttribute("data-id")) });
         const taskDeleteBtn = document.createElement("div");
         taskDeleteBtn.classList.add("delete-btn");
         taskDeleteBtn.addEventListener("click", handleDeleteTask);
@@ -157,6 +161,7 @@ function drawTasks() {
         newTask.append(taskDescription);
         newTask.append(isDone);
         newTask.append(taskDueDate);
+        newTask.append(taskEditBtn);
         newTask.append(taskDeleteBtn);
         taskList.append(newTask);
     }
@@ -200,3 +205,56 @@ myForm.addEventListener('submit', (event) => {
     addGroup(formData.get("groupName"));
     myForm.reset();
 });
+
+const editFormDialog = document.getElementById('edit-task-dialog');
+const closeEditButton = document.getElementById("close-edit-btn");
+const editForm = document.getElementById('editForm');
+
+function getTaskById(id) {
+    for (const task of tasks[currentGroup]) {
+        if (task.id == id)
+            return task;
+    }
+    return null;
+}
+
+function handleEditButton(e, id) {
+    console.log(id)
+    e.stopPropagation();
+    editFormDialog.showModal();
+    editForm.setAttribute("edit-id", id);
+    const newTitle = document.getElementById("newTitle");
+    const newDescription = document.getElementById("newDescription");
+    const newDueDate = document.getElementById("newDueDate");
+    const newPriority = document.getElementById("newPriority");
+    let task = getTaskById(id);
+    newTitle.value = task["title"];
+    newDescription.value = task["description"];
+    newDueDate.value = format(task["dueDate"], "yyyy-MM-dd'T'hh:mm");
+    newPriority.value = task["priority"];
+};
+
+closeEditButton.addEventListener('click', () => {
+    editForm.reset();
+    editFormDialog.close();
+});
+
+editForm.addEventListener('submit', (event) => {
+    const formData = new FormData(event.target);
+    console.log(event.target)
+    console.log(Object.fromEntries(formData))
+    const newTitle = formData.get("title")
+    const newDescription = formData.get("description")
+    const newDueDate = formData.get("dueDate")
+    const newPriority = formData.get("priority")
+    const id = editForm.getAttribute("edit-id");
+    const editedTask = getTaskById(id);
+    editedTask.title = newTitle;
+    editedTask.description = newDescription;
+    editedTask.dueDate = new Date(newDueDate);
+    editedTask.priority = newPriority;
+    console.log(tasks)
+    editForm.reset();
+    drawTasks();
+});
+

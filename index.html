@@ -55,6 +55,25 @@
         </form>
     </dialog>
 
+    <dialog id="edit-task-dialog">
+        <form id="editForm" method="dialog">
+            <label for="newTitle">Título*</label>
+            <input id="newTitle" name="title" type="text">
+            <label for="newDescription">Descrição</label>
+            <input id="newDescription" name="description" type="text">
+            <label for="newDueDate">Data</label>
+            <input id="newDueDate" name="dueDate" type="datetime-local">
+            <label for="newPriority">Selecione a prioridade</label>
+            <select id="newPriority" name="priority">
+                <option selected value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <button id="confirmEditBtn" value="default">Salvar</button>
+            <button type="button" id="close-edit-btn" value="cancel">Cancelar</button>
+        </form>
+    </dialog>
+
     <script src="script.js" type="module"></script>
 </body>
 

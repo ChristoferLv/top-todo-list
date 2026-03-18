@@ -39,20 +39,28 @@ body {
 #add-group {
     width: 20px;
     height: 20px;
-    border: black 1px solid;
+    border: black 3px solid;
     background-image: url(./icons/plus.svg);
     background-size: 30px;
     background-position: -5px -5px;
+    border-radius: 20px;
+    cursor: pointer;
 }
 
 .delete-btn,
-.delete-group {
+.delete-group,
+.edit-btn {
     width: 30px;
     height: 30px;
     background-image: url(./icons/delete.svg);
     background-size: 30px 30px;
     background-repeat: no-repeat;
     margin: 10px;
+    cursor: pointer;
+}
+
+.edit-btn{
+   background-image: url(./icons/pencil.svg); 
 }
 
 .new-todo-tab {
@@ -103,8 +111,8 @@ dialog {
     border: 1px solid black;
     background-color: red;
     margin-top: 15px;
+    cursor: pointer;
 }
-
 
 .done {
     background-color: green;

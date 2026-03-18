@@ -5,12 +5,12 @@ console.log("script")
 
 
 class Task {
-    constructor(title, description, dueDate, priority) {
-        this.id = crypto.randomUUID();
+    constructor(title, description, dueDate, priority, id = crypto.randomUUID(), done = false) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
-        this.done = false;
+        this.done = done;
         this.priority = priority;
     }
 
@@ -208,16 +208,48 @@ const DOMManager = (() => {
 })();
 
 const TodoList = ((DOMManager) => {
+    const LOCALSTORAGE_KEY_NAME = "myTasks";
     let currentGroup = "Tasks";
-    const tasks = {
-        "Tasks": [
-            new Task("Tarefa1", "Tem que fazer a tarefa 1", addDays(new Date(), 1), 1),
-            new Task("Tarefa2", "Tem que fazer a tarefa 2", addDays(new Date(), 2), 2),
-            new Task("Tarefa3", "Tem que fazer a tarefa 3", addDays(new Date(), 3), 3),
-            new Task("Tarefa4", "Tem que fazer a tarefa 4", addDays(new Date(), 4), 2),
-            new Task("Tarefa5", "Tem que fazer a tarefa 5", addDays(new Date(), 5), 2),
-        ]
+    let tasks = {
     }
+    console.log(tasks);
+
+    const reviver = (key, value) => {
+        if (
+            value &&
+            typeof value === "object" &&
+            !Array.isArray(value) &&
+            "title" in value &&
+            "description" in value &&
+            "dueDate" in value
+        ) {
+            return Object.assign(new Task(), {
+                ...value,
+                dueDate: new Date(value.dueDate)
+            });
+        }
+
+        return value;
+    };
+
+    const savedTasks = localStorage.getItem("myTasks");
+    if (savedTasks) {
+        // Usando função reviver
+        // const savedTasksParsed = JSON.parse(savedTasks, reviver);
+        // tasks = savedTasksParsed;
+
+        const savedTasksParsed = JSON.parse(savedTasks);
+        for (const group in savedTasksParsed) {
+            tasks[group] = [];
+            for (const task of savedTasksParsed[group]) {
+                tasks[group].push(Object.assign(new Task, { ...task, dueDate: new Date(task.dueDate) }));
+            }
+        }
+        currentGroup = Object.keys(savedTasksParsed)[0];
+    } else {
+        tasks[currentGroup] = [];
+    }
+
 
     DOMManager.drawGroups(tasks, handleGroupClick);
     DOMManager.drawTasks(tasks, handleDoneTaks, handleDeleteTask, currentGroup);
@@ -226,12 +258,17 @@ const TodoList = ((DOMManager) => {
     DOMManager.initializeDeleGroup(deleteGroup)
     DOMManager.initializeHandleEditButton(getTaskById, editTask);
 
+    function updateLocalStorage() {
+        localStorage.setItem(LOCALSTORAGE_KEY_NAME, JSON.stringify(tasks));
+    }
+
     /**
      * @param {string} name 
      */
     function addGroup(name) {
         tasks[name] = [];
         DOMManager.drawGroups(tasks, handleGroupClick);
+        updateLocalStorage();
     }
 
     /**
@@ -244,6 +281,7 @@ const TodoList = ((DOMManager) => {
     function addTask(title, description, dueDate, priority) {
         tasks[currentGroup].push(new Task(title, description, new Date(dueDate), priority))
         DOMManager.drawTasks(tasks, handleDoneTaks, handleDeleteTask, currentGroup);
+        updateLocalStorage();
     }
 
     function deleteGroup() {
@@ -258,6 +296,7 @@ const TodoList = ((DOMManager) => {
         }
         DOMManager.drawGroups(tasks, handleGroupClick);
         DOMManager.drawTasks(tasks, handleDoneTaks, handleDeleteTask, currentGroup);
+        updateLocalStorage();
     }
 
     function editTask(id, newTitle, newDescription, newDueDate, newPriority) {
@@ -267,7 +306,7 @@ const TodoList = ((DOMManager) => {
         editedTask.dueDate = new Date(newDueDate);
         editedTask.priority = newPriority;
         DOMManager.drawTasks(tasks, handleDoneTaks, handleDeleteTask, currentGroup);
-
+        updateLocalStorage();
     }
 
     /**
@@ -292,6 +331,7 @@ const TodoList = ((DOMManager) => {
             }
         }
         DOMManager.drawTasks(tasks, handleDoneTaks, handleDeleteTask, currentGroup);
+        updateLocalStorage();
     }
 
     /**
@@ -304,6 +344,7 @@ const TodoList = ((DOMManager) => {
         const newList = tasks[currentGroup].filter(task => task.id !== taskId);
         tasks[currentGroup] = newList;
         DOMManager.drawTasks(tasks, handleDoneTaks, handleDeleteTask, currentGroup);
+        updateLocalStorage();
     }
 
     function getTaskById(id) {

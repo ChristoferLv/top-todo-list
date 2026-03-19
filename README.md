@@ -50,6 +50,8 @@ Uma aplicação de todo list totalmente funcional contendo:
 - **Classe Task**: Modelagem de tarefas com comportamento próprio
 - **Separation of Concerns**: Responsabilidades divididas entre renderização e regras da aplicação
 - **Serialização/Reconstrução de Objetos**: Conversão de dados salvos para objetos de domínio ao carregar o app
+- **Dependency Injection**: Funções de manipulação de eventos e lógica são injetadas no módulo de interface (DOMManager), promovendo desacoplamento entre UI e regras de negócio
+- **Event-driven Callbacks**: Uso de callbacks para responder a eventos do DOM de forma dinâmica
 
 ## Tecnologias Utilizadas
 

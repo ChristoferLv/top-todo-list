@@ -1,6 +1,6 @@
 # Todo List
 
-Aplicação de gerenciamento de tarefas desenvolvida como parte da trilha JavaScript do [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-todo-list), com foco em **arquitetura modular**, **manipulação do DOM** e **persistência de dados com LocalStorage**.
+Aplicação de gerenciamento de tarefas desenvolvida como parte da trilha JavaScript do [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-todo-list), com foco em **arquitetura modular**, **manipulação do DOM**, **uso de bibliotecas externas** e **persistência de dados com LocalStorage**.
 
 ## Objetivo do Projeto
 
@@ -10,7 +10,7 @@ O objetivo principal era praticar:
 - Criação, edição e remoção de tarefas
 - Gerenciamento de grupos/projetos de tarefas
 - Persistência de dados no navegador com LocalStorage
-- Manipulação de datas e formatação
+- Manipulação de datas e formatação com date-fns
 - Interações avançadas com formulários e dialogs
 
 ## O que é?

@@ -186,11 +186,12 @@ const DOMManager = (() => {
             const description = document.querySelector("#description")
             const dueDate = document.querySelector("#dueDate")
             const priority = document.querySelector("#priority")
-            addTask(title.value, description.value, dueDate.value, priority.value);
-            title.value = '';
-            description.value = '';
-            dueDate.value = '';
-            priority.value = '';
+            if (addTask(title.value, description.value, dueDate.value, priority.value)) {
+                title.value = '';
+                description.value = '';
+                dueDate.value = '';
+                priority.value = 1;
+            }
         })
     }
 
@@ -247,7 +248,13 @@ const TodoList = ((DOMManager) => {
         }
         currentGroup = Object.keys(savedTasksParsed)[0];
     } else {
-        tasks[currentGroup] = [];
+        tasks[currentGroup] = [
+            new Task("Tarefa1", "Tem que fazer a tarefa 1", addDays(new Date(), 1), 1),
+            new Task("Tarefa2", "Tem que fazer a tarefa 2", addDays(new Date(), 2), 2),
+            new Task("Tarefa3", "Tem que fazer a tarefa 3", addDays(new Date(), 3), 3),
+            new Task("Tarefa4", "Tem que fazer a tarefa 4", addDays(new Date(), 4), 2),
+            new Task("Tarefa5", "Tem que fazer a tarefa 5", addDays(new Date(), 5), 2),
+        ];
     }
 
 
@@ -279,9 +286,14 @@ const TodoList = ((DOMManager) => {
      * @param {string} priority 
      */
     function addTask(title, description, dueDate, priority) {
+        if (title == '' || description == '' || dueDate == '' || priority == '') {
+            alert("Preencha todos os campos corretamente!");
+            return false;
+        }
         tasks[currentGroup].push(new Task(title, description, new Date(dueDate), priority))
         DOMManager.drawTasks(tasks, handleDoneTaks, handleDeleteTask, currentGroup);
         updateLocalStorage();
+        return true;
     }
 
     function deleteGroup() {

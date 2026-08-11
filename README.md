@@ -60,6 +60,10 @@ A fully functional todo list application containing:
 - JavaScript (ES6+) - Module Pattern, Classes, LocalStorage API
 - date-fns (date formatting and manipulation)
 
+## Visualization
+
+<img width="1920" height="919" alt="top-todo-list_screenshot" src="https://github.com/user-attachments/assets/8572be64-4010-4668-b80a-8872e95e0c89" />
+
 ---
 
 Project developed following: [The Odin Project - Todo List](https://www.theodinproject.com/lessons/node-path-javascript-todo-list)

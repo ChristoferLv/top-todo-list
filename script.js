@@ -55,7 +55,7 @@ const DOMManager = (() => {
      */
     function drawTasks(tasks, handleDoneTaks, handleDeleteTask, currentGroup) {
         taskList.innerText = '';
-        listName.innerText = "Vizualisando grupo: " + currentGroup;
+        listName.innerText = "Visualizing group: " + currentGroup;
         if (!(currentGroup in tasks)) return;
         for (const task of tasks[currentGroup]) {
             const newTask = document.createElement("div");
@@ -249,11 +249,11 @@ const TodoList = ((DOMManager) => {
         currentGroup = Object.keys(savedTasksParsed)[0];
     } else {
         tasks[currentGroup] = [
-            new Task("Tarefa1", "Tem que fazer a tarefa 1", addDays(new Date(), 1), 1),
-            new Task("Tarefa2", "Tem que fazer a tarefa 2", addDays(new Date(), 2), 2),
-            new Task("Tarefa3", "Tem que fazer a tarefa 3", addDays(new Date(), 3), 3),
-            new Task("Tarefa4", "Tem que fazer a tarefa 4", addDays(new Date(), 4), 2),
-            new Task("Tarefa5", "Tem que fazer a tarefa 5", addDays(new Date(), 5), 2),
+            new Task("Task1", "Must do task 1", addDays(new Date(), 1), 1),
+            new Task("Task2", "Must do task 2", addDays(new Date(), 2), 2),
+            new Task("Task3", "Must do task 3", addDays(new Date(), 3), 3),
+            new Task("Task4", "Must do task 4", addDays(new Date(), 4), 2),
+            new Task("Task5", "Must do task 5", addDays(new Date(), 5), 2),
         ];
     }
 
@@ -287,7 +287,7 @@ const TodoList = ((DOMManager) => {
      */
     function addTask(title, description, dueDate, priority) {
         if (title == '' || description == '' || dueDate == '' || priority == '') {
-            alert("Preencha todos os campos corretamente!");
+            alert("Fill all fields correctly!");
             return false;
         }
         tasks[currentGroup].push(new Task(title, description, new Date(dueDate), priority))

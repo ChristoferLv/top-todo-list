@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>THE COOLEST TODO</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,31 +16,31 @@
         </div>
         <div class="sidebar">
             <div class="top">
-                <p>Grupos</p>
+                <p>Groups</p>
                 <div id="add-group"></div>
             </div>
             <div class="groups-container"></div>
         </div>
         <div class="content">
             <div class="content-header">
-                <p class="list-name">Tarefas</p>
+                <p class="list-name">Tasks</p>
                 <div class="add-todo"></div>
                 <div class="delete-group"></div>
                 <div class="break"></div>
                 <div class="new-todo-tab hidden">
-                    <label for="title">Título*</label>
+                    <label for="title">Title*</label>
                     <input id="title" type="text">
-                    <label for="description">Descrição</label>
+                    <label for="description">Description</label>
                     <input id="description" type="text">
-                    <label for="dueDate">Data</label>
+                    <label for="dueDate">Due Date</label>
                     <input id="dueDate" type="datetime-local">
-                    <label for="cores">Selecione a prioridade</label>
+                    <label for="cores">Priority</label>
                     <select id="priority" name="priority">
                         <option selected value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                     </select>
-                    <button type="button">Adicionar</button>
+                    <button type="button">Add</button>
                 </div>
             </div>
             <div class="content-body"></div>
@@ -51,29 +51,29 @@
 
     <dialog id="add-group-dialog">
         <form id="myForm" method="dialog">
-            <label for="groupName">Nome do Grupo</label>
-            <input type="text" id="groupName" name="groupName" placeholder="Nome" required>
-            <button id="confirmBtn" value="default">Confirm</button>
+            <label for="groupName">Group</label>
+            <input type="text" id="groupName" name="groupName" placeholder="Name" required>
+            <button id="confirmBtn" value="default">Save</button>
             <button type="button" id="close-btn" value="cancel">Cancel</button>
         </form>
     </dialog>
 
     <dialog id="edit-task-dialog">
         <form id="editForm" method="dialog">
-            <label for="newTitle">Título*</label>
+            <label for="newTitle">Title*</label>
             <input id="newTitle" name="title" type="text">
-            <label for="newDescription">Descrição</label>
+            <label for="newDescription">Description</label>
             <input id="newDescription" name="description" type="text">
-            <label for="newDueDate">Data</label>
+            <label for="newDueDate">Due Date</label>
             <input id="newDueDate" name="dueDate" type="datetime-local">
-            <label for="newPriority">Selecione a prioridade</label>
+            <label for="newPriority">Priority</label>
             <select id="newPriority" name="priority">
                 <option selected value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
             </select>
-            <button id="confirmEditBtn" value="default">Salvar</button>
-            <button type="button" id="close-edit-btn" value="cancel">Cancelar</button>
+            <button id="confirmEditBtn" value="default">Save</button>
+            <button type="button" id="close-edit-btn" value="cancel">Cancel</button>
         </form>
     </dialog>
 
